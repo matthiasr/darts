@@ -80,3 +80,9 @@ func TestStep(t *testing.T) {
 		}
 	}
 }
+
+func BenchmarkRun(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		NewGame().Run()
+	}
+}
