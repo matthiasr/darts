@@ -2,8 +2,11 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
+	"time"
 )
 
 func main() {
-	fmt.Println("xx")
+	rand.Seed(time.Now().UnixNano())
+	fmt.Println("score is:", NewGame().Run())
 }
