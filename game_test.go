@@ -35,7 +35,7 @@ func fixedHitter(x, y float64) hitter {
 
 // compareGames is true if the games are logically equivalent: the hitter never
 // matters; the radius is only relevant unless the game is already finished.
-func compareGames(this, that *Game) bool {
+func compareGames(this, that Game) bool {
 	if this.finished {
 		return that.finished && this.score == that.score
 	}
