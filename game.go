@@ -2,6 +2,8 @@ package main
 
 import "math/rand"
 
+import "fmt"
+
 type hitter func() (float64, float64)
 
 // TODO(mr): is it sound to only work in the top-right quarter?
@@ -52,4 +54,9 @@ func (g *Game) Run() uint {
 		g.Step()
 	}
 	return g.score
+}
+
+// String returns a readable representation of the game.
+func (g *Game) String() string {
+	return fmt.Sprintf("finished=%v,radius=%v,score=%d", g.finished, g.radius, g.score)
 }
