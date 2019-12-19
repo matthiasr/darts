@@ -20,8 +20,8 @@ type Game struct {
 }
 
 // NewGame initializes a new game using the standard random hitter.
-func NewGame() *Game {
-	return &Game{
+func NewGame() Game {
+	return Game{
 		hitter:   randomHitter,
 		radius:   1.0,
 		score:    0, // score is incremented one last time in the last throw
@@ -29,34 +29,34 @@ func NewGame() *Game {
 	}
 }
 
-func (g *Game) isHit(x, y float64) bool {
+func (g Game) isHit(x, y float64) bool {
 	return x*x+y*y < g.radius*g.radius
 }
 
-// Step iterates the game once.
-func (g *Game) Step() {
+// Step iterates the game once and returns the new state.
+func (g Game) Step() Game {
 	if g.finished {
-		return
+		return g
 	}
 
 	g.score++
 	x, y := g.hitter()
 	if g.isHit(x, y) {
-		return
+		return g
 	}
 	g.finished = true
-	return
+	return g
 }
 
 // Run a single game to completion, returning the final score.
-func (g *Game) Run() uint {
+func (g Game) Run() uint {
 	for !g.finished {
-		g.Step()
+		g = g.Step()
 	}
 	return g.score
 }
 
 // String returns a readable representation of the game.
-func (g *Game) String() string {
+func (g Game) String() string {
 	return fmt.Sprintf("finished=%v,radius=%v,score=%d", g.finished, g.radius, g.score)
 }
