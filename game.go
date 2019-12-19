@@ -4,6 +4,8 @@ import "math/rand"
 
 import "fmt"
 
+import "math"
+
 type hitter func() (float64, float64)
 
 // TODO(mr): is it sound to only work in the top-right quarter?
@@ -29,8 +31,14 @@ func NewGame() Game {
 	}
 }
 
+// isHit determines whether a hit is, well, a hit.
 func (g Game) isHit(x, y float64) bool {
 	return x*x+y*y < g.radius*g.radius
+}
+
+// newRadius calculates the new radius for a hit.
+func (g Game) newRadius(x, y float64) float64 {
+	return math.Sqrt(g.radius*g.radius - x*x - y*y)
 }
 
 // Step iterates the game once and returns the new state.
@@ -42,6 +50,7 @@ func (g Game) Step() Game {
 	g.score++
 	x, y := g.hitter()
 	if g.isHit(x, y) {
+		g.radius = g.newRadius(x, y)
 		return g
 	}
 	g.finished = true
