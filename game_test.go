@@ -69,12 +69,14 @@ func TestStep(t *testing.T) {
 			Game{radius: math.Sqrt(0.5), finished: false, score: 1},
 		},
 		stepCase{
-			Game{radius: math.Sqrt(0.5), hitter: fixedHitter(0.5, 0.5), score: 1},
+			Game{radius: math.Sqrt(0.5), hitter: fixedHitter(0.6, 0.5), score: 1},
 			Game{finished: true, score: 2},
 		},
 	}
 
-	for _, _ = range cases {
-		//TODO
+	for _, c := range cases {
+		if got := c.current.Step(); !compareGames(c.next, got) {
+			t.Errorf("expected step:\n  %s -> %s\ngot:\n  %s -> %s", c.current, c.next, c.current, got)
+		}
 	}
 }
