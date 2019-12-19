@@ -6,7 +6,13 @@ import (
 	"time"
 )
 
+const (
+	runs = 100
+)
+
 func main() {
 	rand.Seed(time.Now().UnixNano())
-	fmt.Println("score is:", NewGame().Run())
+	for i := 0; i < runs; i++ {
+		fmt.Printf("%d ", NewGame().Run())
+	}
 }
